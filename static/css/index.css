@@ -9,6 +9,22 @@ body {
   margin: auto;
 }
 
+/* Let section images use full container width (960px) while text stays 760px */
+.publication-image {
+  width: 1200px;
+  max-width: calc(100vw - 2rem);
+  margin-left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.publication-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .section {
   font-family: Georgia, serif;
 }
@@ -33,6 +49,11 @@ figcaption,
 .publication-image-caption {
   font-size: 14px;
   color: #555;
+}
+
+.publication-image-caption {
+  margin-top: 0.5rem;
+  text-align: center;
 }
 
 .references {
@@ -157,16 +178,6 @@ pre {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.publication-image {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.publication-image-caption {
-  margin-top: 0.5rem;
-  text-align: center;
 }
 
 .publication-body img {
