@@ -114,7 +114,11 @@ const paper = {
   ],
   content: {
     intros: [
-      // { type: "abstract", title: "Abstract", text: "This is the abstract of the paper." },
+      {
+        type: "abstract",
+        title: "Abstract",
+        text: "Nanometre-resolution tomograms acquired with cryogenic electron tomography (cryo-ET) provide unprecedented insight into sub-cellular architecture and the 3D spatial organization of macromolecules in their native environment. Yet, there remains an unmet need for computational pipelines that generalize across experimental conditions and remain robust to extremely low signal-to-noise ratios and reconstruction artifacts. We present CryoDINO, a general-purpose foundation model for cryo-ET, pretrained using teacher-student self-distillation self-supervised learning on an ultra-large corpus of over 360,000 3D patches spanning over 37 species and experimental conditions. CryoDINO learns transferable 3D representations that encode explicit semantic information about macromolecular identity and spatial organization. Validation against state-of-the-art task-specific methods on multiple downstream benchmarks demonstrated CryoDINO’s high generalizability and performance. CryoDINO establishes a scalable and transferable representation backbone for generalizable computational pipelines in in situ structural biology.",
+      },
       // { type: "contributions", title: "Key Contributions", items: ["First key contribution", "Second key contribution"] },
     ],
     sections: [
@@ -137,12 +141,18 @@ const paper = {
         text: "Across three challenging benchmarks (CZII-10001, CZII-10010, EMPIAR-10989) and diverse subcellular targets — organelles, cytoplasm, actin filaments, and membranes — CryoDINO with a frozen encoder trained on just 50% of labeled data (only for 100 epochs) closely rivals or outperform nnU-Net trained on 100% of labels under its full supervised protocol with deep supervision and test-time postprocessing, and 1000 epochs training . With 100% of labels, CryoDINO surpasses nnU-Net on every axis. This demonstrates that self-supervised pretraining on unlabeled cryo-ET volumes captures representations powerful enough to reduce annotation burden by half without sacrificing accuracy.",
       },
     ],
-    // conclusion: ["First paragraph...", "Second paragraph..."],
+    conclusion: {
+      title: "Contributions & Conclusion",
+      paragraphs: [
+        "We introduce CryoDINO, a cryo-ET foundation model trained via a teacher--student self-distillation self-supervised learning framework on large-scale unannotated data, spanning 37 species, multiple datasets, and diverse imaging conditions and resolutions.",
+        "We show that CryoDINO learns transferable 3D representations that encode explicit semantic information about macromolecular identity and spatial organization.",
+        "We demonstrate robust generalization across acquisition settings and annotation regimes, achieving consistent gains in low-label scenarios and across three downstream tasks, establishing CryoDINO as a scalable and label-efficient backbone for general-purpose cryo-ET analysis.",
+      ],
+    },
   },
-  bibtex: `@article{xxx,
-    author    = {xxx},
-    title     = {xxx},
-    journal   = {xxx},
-    year      = {xxx},
-  }`,
+  bibtex: `@article{cryodino2025,
+  title   = {CryoDINO: A 3D Self-Supervised Foundation Model for Cryo-Electron Tomography},
+  author  = {Attarpour, Ahmadreza and others},
+  year    = {2025}
+}`,
 };
