@@ -67,6 +67,20 @@ pre {
   font-family: "Google Sans", sans-serif;
 }
 
+.publication-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.publication-hero .logo {
+  max-height: 250px;
+  width: auto;
+  display: block;
+}
+
 .publication-title {
 }
 

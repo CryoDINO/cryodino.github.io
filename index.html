@@ -90,9 +90,10 @@
           <div class="container is-max-desktop">
             <div class="columns is-centered">
               <div class="column has-text-centered">
-                <h1
-                  class="title is-1 publication-title"
-                >{{paper.metadata.title}}</h1>
+                <div class="publication-hero">
+                  <img src="./static/images/cryoDINO_logo.png" alt="CryoDINO" class="logo" />
+                  <h1 class="title is-1 publication-title">{{paper.metadata.title}}</h1>
+                </div>
                 <div class="is-size-5 publication-authors">
                   {{#each paper.authors}}
                     <span class="author-block">
