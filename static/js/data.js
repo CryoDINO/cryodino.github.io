@@ -131,11 +131,11 @@ const paper = {
     //   link: "https://youtube.com/xxx",
     //   icon: "fab fa-youtube",
     // },
-    // {
-    //   name: "Code",
-    //   link: "https://github.com/xxx",
-    //   icon: "fab fa-github",
-    // },
+    {
+      name: "Code",
+      link: "https://github.com/bowang-lab/CryoDINO",
+      icon: "fab fa-github",
+    },
     // {
     //   name: "Dataset",
     //   link: "https://example.com/dataset",
