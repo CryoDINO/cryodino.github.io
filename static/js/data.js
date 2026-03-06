@@ -145,7 +145,16 @@ const paper = {
   content: {
     intros: [
       {
-        video: { src: "./static/videos/tiled_2x2.mp4" },
+        title:
+          "CryoDINO in Action: Object Identification Across Biological Structures",
+        video: {
+          src: "./static/videos/tiled_2x2.mp4",
+        },
+        paragraphs: [
+          {
+            text: "CryoDINO learns generalizable 3D representations that transfer across the full spectrum of cryo-ET object identification challenges. Each panel shows a different downstream dataset from — thin actin filaments to densely packed organelle classes — all segmented by the same pretrained backbone with minimal annotations.",
+          },
+        ],
       },
       {
         title: "Abstract",

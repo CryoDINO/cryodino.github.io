@@ -32,8 +32,8 @@ body {
 }
 
 .content-block-media video {
-  border-radius: 8px;
-  background: #000;
+  margin: auto;
+  width: 600px;
 }
 
 /* Caption for image/video */
