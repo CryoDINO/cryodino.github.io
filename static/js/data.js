@@ -22,7 +22,7 @@ const paper = {
   authors: [
     {
       name: "Ahmadreza Attarpour",
-      affiliation: { number: "1,2" },
+      affiliation: { number: "2" },
       equal_contribution: true,
     },
     {
@@ -151,9 +151,9 @@ const paper = {
       ],
     },
   },
-  bibtex: `@article{cryodino2025,
-  title   = {CryoDINO: A 3D Self-Supervised Foundation Model for Cryo-Electron Tomography},
-  author  = {Attarpour, Ahmadreza and others},
-  year    = {2025}
+  bibtex: `@misc{cryodino2026,
+  title  = {CryoDINO: A Generalizable 3D Foundation Model for Cryo-Electron Tomography},
+  author = {Attarpour, Ahmadreza and Kim, Sumin and Ma, Jun and Xu, Tony and Seo, Yeonwoo and Li, Baidu and Goubran, Maged and Wang, Bo},
+  year   = {2026}
 }`,
 };
