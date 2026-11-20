@@ -10,8 +10,10 @@
     <meta property="og:url" content="{{paper.metadata.url}}" />
     <meta property="og:type" content="website" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
       rel="stylesheet"
     />
 
@@ -38,6 +40,7 @@
   </head>
   <body>
     <div id="content"></div>
+    <div id="lightbox" class="lightbox" aria-hidden="true"><img alt="" /></div>
 
     <script id="paper-template" type="text/x-handlebars-template">
       {{#if paper.navbar}}
@@ -85,178 +88,178 @@
         </nav>
       {{/if}}
 
-      <section class="hero">
-        <div class="hero-body">
-          <div class="container is-max-desktop">
-            <div class="columns is-centered">
-              <div class="column has-text-centered">
-                <div class="publication-hero">
-                  <img src="./static/images/cryoDINO_logo.png" alt="CryoDINO" class="logo" />
-                  <h1 class="title is-1 publication-title">{{paper.metadata.title}}</h1>
-                </div>
-                <div class="is-size-5 publication-authors">
-                  {{#each paper.authors}}
-                    <span class="author-block">
-                      {{#if links.website}}
-                        <a href="{{links.website}}" target="_blank">{{name}}</a>
-                      {{else}}
-                        {{name}}
-                      {{/if}}<sup>{{affiliation.number}}{{#if equal_contribution}},*{{/if}}{{#if corresponding}},†{{/if}}</sup>{{#unless @last}},{{/unless}}
-                    </span>
+      <!-- Sticky top bar. -->
+      <header class="topbar" id="topbar">
+        <div class="topbar-inner">
+          <a href="#top" class="topbar-brand">
+            <img src="./static/images/cryoDINO_logo.png" alt="" />
+            <span>{{paper.metadata.short_title}}</span>
+          </a>
+          <nav class="topbar-links">
+            {{#each paper.nav}}<a href="#{{id}}">{{label}}</a>{{/each}}
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero-modern" id="top">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="container is-max-widescreen">
+          <div class="columns is-vcentered is-variable is-8">
+            <div class="column is-7 hero-text reveal">
+              {{#if paper.metadata.venue}}<span class="hero-badge">{{paper.metadata.venue}}</span>{{/if}}
+              <h1 class="hero-title">
+                <img class="hero-logo" src="./static/images/cryoDINO_logo.png" alt="CryoDINO logo" />
+                <span class="gradient-text">{{paper.metadata.short_title}}</span>
+              </h1>
+              <p class="hero-subtitle">{{paper.metadata.subtitle}}</p>
+              {{#if paper.metadata.tagline}}
+                <p class="hero-tagline">{{paper.metadata.tagline}}</p>
+              {{/if}}
+              {{#if (hasItems paper.metadata.stats)}}
+                <div class="hero-stats">
+                  {{#each paper.metadata.stats}}
+                    <div class="stat">
+                      <span class="stat-value">{{value}}</span>
+                      <span class="stat-label">{{label}}</span>
+                    </div>
                   {{/each}}
                 </div>
-
-                <div class="is-size-6 publication-authors"><sup>*</sup>&nbsp;Equal contribution&nbsp;&nbsp;<sup>†</sup>&nbsp;Corresponding authors</div>
-
-                <br />
-
-                <div class="is-size-5 publication-authors">
-                  {{#each paper.affiliations}}
-                    <span class="author-block"><sup
-                      >{{number}}</sup>{{name}}{{#unless @last}},
-                      {{/unless}}</span>
-                  {{/each}}
-                </div>
-
-                <div class="column has-text-centered">
-                  <div class="publication-links">
-                    {{#each paper.link_items}}
-                      <span class="link-block">
-                        <a
-                          href="{{link}}"
-                          target="_blank"
-                          class="external-link button is-normal is-rounded is-dark"
-                        >
-                          <span class="icon">
-                            <i class="{{icon}}"></i>
-                          </span>
-                          <span>{{name}}</span>
-                        </a>
-                      </span>
-                    {{/each}}
-                  </div>
-                </div>
+              {{/if}}
+              <div class="hero-links">
+                {{#each paper.link_items}}
+                  <a href="{{link}}" target="_blank" rel="noopener" class="pill-button">
+                    <i class="{{icon}}"></i><span>{{name}}</span>
+                  </a>
+                {{/each}}
+                <a href="#authors" class="pill-button is-ghost"><span>Authors</span></a>
+                <a href="#citation" class="pill-button is-ghost"><span>BibTeX</span></a>
               </div>
+            </div>
+            <div class="column is-5 reveal">
+              {{#if paper.metadata.hero_video}}
+                <div class="hero-media">
+                  <video src="{{paper.metadata.hero_video.src}}" autoplay muted loop playsinline></video>
+                </div>
+                {{#if paper.metadata.hero_video.caption}}<p class="hero-media-caption">{{paper.metadata.hero_video.caption}}</p>{{/if}}
+              {{/if}}
             </div>
           </div>
         </div>
       </section>
 
       {{#if (hasItems paper.content.intros)}}
-      <section class="section">
-        <div class="container is-max-desktop">
-          {{#each paper.content.intros}}
-            <div class="columns is-centered has-text-centered">
-              <div class="column is-four-fifths">
-                {{#if title}}<h2 class="title is-3">{{title}}</h2>{{/if}}
-                <div class="content has-text-justified">
-                  {{#if video}}
-                    <div class="content-block-media">
-                      <video src="{{video.src}}" controls playsinline></video>
-                      {{#if video.caption}}
-                        <p class="content-block-caption">{{video.caption}}</p>
-                      {{else}}
-                        <br />
-                      {{/if}}
-                    </div>
-                  {{/if}}
-                  {{#if (hasItems paragraphs)}}
-                    {{#if (eq paragraphStyle "list")}}
-                      <ul>
-                        {{#each paragraphs}}
-                          <li>{{text}}</li>
-                        {{/each}}
-                      </ul>
-                    {{else}}
-                      {{#each paragraphs}}
-                        <p>{{text}}</p>
-                      {{/each}}
-                    {{/if}}
-                  {{/if}}
-                </div>
+      <section class="section" id="abstract">
+        <div class="container is-max-widescreen">
+          <div class="columns is-variable is-6 intro-columns">
+            {{#each paper.content.intros}}
+              <div class="column reveal">
+                {{#if title}}<h2 class="title is-4 block-heading">{{title}}</h2>{{/if}}
+                {{#if video}}
+                  <div class="media-block reveal">
+                    <video src="{{video.src}}" autoplay muted loop playsinline></video>
+                    {{#if video.caption}}<p class="content-block-caption">{{video.caption}}</p>{{/if}}
+                  </div>
+                {{/if}}
+                {{#if (hasItems paragraphs)}}
+                  <div class="content has-text-justified">
+                    {{#each paragraphs}}<p>{{text}}</p>{{/each}}
+                  </div>
+                {{/if}}
               </div>
-            </div>
-          {{/each}}
+            {{/each}}
+          </div>
         </div>
       </section>
       {{/if}}
 
       <!-- Sections (loop). -->
       {{#each paper.content.sections}}
-        <section class="section">
-          <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-              <div class="column is-four-fifths">
-                <h2 class="title is-3">{{title}}</h2>
-                {{#if image}}
-                  <div class="content-block-media">
-                    <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" loading="lazy" />
-                    {{#if image.caption}}
-                      <p class="content-block-caption">{{image.caption}}</p>
-                    {{/if}}
-                  </div>
-                {{/if}}
-              </div>
-            </div>
+        <section class="section {{#if shaded}}is-shaded{{/if}}" {{#if id}}id="{{id}}"{{/if}}>
+          <div class="container is-max-widescreen">
+            {{#if title}}<h2 class="title is-3 has-text-centered section-title reveal">{{title}}</h2>{{/if}}
 
-            {{#if (hasItems paragraphs)}}
-              <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                  <div class="content has-text-justified">
-                    {{#if (eq paragraphStyle "list")}}
-                      <ul>
-                        {{#each paragraphs}}
-                          <li>{{text}}</li>
-                        {{/each}}
+            {{#if diagram}}
+              <div class="flow reveal">
+                {{#each diagram.steps}}
+                  <div class="flow-step">
+                    <div class="flow-card">
+                      <span class="flow-num">{{inc @index}}</span>
+                      <div class="flow-media {{#if fit}}is-{{fit}}{{/if}}">
+                        <img src="{{image}}" alt="{{title}}" loading="lazy" />
+                      </div>
+                      <h3 class="flow-title">{{title}}</h3>
+                      <ul class="flow-lines">
+                        {{#each lines}}<li>{{this}}</li>{{/each}}
                       </ul>
-                    {{else}}
-                      {{#each paragraphs}}
-                        <p>{{text}}</p>
-                      {{/each}}
-                    {{/if}}
+                      {{#if chip}}<span class="flow-chip">{{chip}}</span>{{/if}}
+                    </div>
                   </div>
-                </div>
+                {{/each}}
               </div>
+              {{#if diagram.legend}}
+                <div class="flow-legend reveal">
+                  {{#each diagram.legend}}<span><i class="swatch" style="background: {{color}}"></i>{{label}}</span>{{/each}}
+                </div>
+              {{/if}}
+              {{#if diagram.note}}<p class="content-block-caption reveal">{{diagram.note}}</p>{{/if}}
             {{/if}}
 
-            {{#if table}}
-              <div class="columns is-centered">
-                <div class="column is-four-fifths">
-                  <div class="table-container results-table">
-                    <table class="table is-narrow is-hoverable is-fullwidth">
-                      <thead>
-                        <tr>
-                          {{#each table.columns}}<th>{{this}}</th>{{/each}}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {{#each table.rows}}
-                          <tr>
-                            {{#each this}}<td>{{cell this}}</td>{{/each}}
-                          </tr>
-                        {{/each}}
-                      </tbody>
-                    </table>
-                  </div>
-                  {{#if table.caption}}
-                    <p class="content-block-caption">{{table.caption}}</p>
+            {{#if (eq layout "split")}}
+              <div class="columns is-variable is-6 is-vcentered">
+                <div class="column is-7">
+                  {{#if image}}
+                    <div class="media-block reveal">
+                      <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" loading="lazy" />
+                      {{#if image.caption}}<p class="content-block-caption">{{image.caption}}</p>{{/if}}
+                    </div>
                   {{/if}}
                 </div>
-              </div>
-            {{/if}}
-
-            {{#each extra_images}}
-              <div class="columns is-centered has-text-centered">
-                <div class="column is-four-fifths">
-                  <div class="content-block-media">
-                    <img src="{{src}}" alt="{{#if caption}}{{caption}}{{else}}{{../title}}{{/if}}" loading="lazy" />
-                    {{#if caption}}
-                      <p class="content-block-caption">{{caption}}</p>
-                    {{/if}}
+                <div class="column is-5">
+                  <div class="content has-text-justified">
+                    {{#each paragraphs}}<p>{{text}}</p>{{/each}}
                   </div>
                 </div>
               </div>
-            {{/each}}
+            {{else}}
+              {{#if image}}
+                <div class="media-block reveal">
+                  <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" loading="lazy" />
+                  {{#if image.caption}}<p class="content-block-caption">{{image.caption}}</p>{{/if}}
+                </div>
+              {{/if}}
+              {{#if (hasItems paragraphs)}}
+                <div class="content has-text-justified section-text reveal">
+                  {{#if (eq paragraphStyle "list")}}
+                    <ul>{{#each paragraphs}}<li>{{text}}</li>{{/each}}</ul>
+                  {{else}}
+                    {{#each paragraphs}}<p>{{text}}</p>{{/each}}
+                  {{/if}}
+                </div>
+              {{/if}}
+            {{/if}}
+
+            {{#if (hasItems columns)}}
+              <div class="columns is-variable is-5 is-vcentered block-columns">
+                {{#each columns}}
+                  <div class="column reveal {{#if width}}{{width}}{{/if}}">
+                    <div class="{{#if card}}info-card{{/if}}">
+                      {{#if title}}<h3 class="title is-5">{{title}}</h3>{{/if}}
+                      {{#if image}}
+                        <div class="media-block reveal">
+                          <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" loading="lazy" />
+                          {{#if image.caption}}<p class="content-block-caption">{{image.caption}}</p>{{/if}}
+                        </div>
+                      {{/if}}
+                      {{#if (hasItems paragraphs)}}
+                        <div class="content has-text-justified">
+                          {{#each paragraphs}}<p>{{text}}</p>{{/each}}
+                        </div>
+                      {{/if}}
+                    </div>
+                  </div>
+                {{/each}}
+              </div>
+            {{/if}}
           </div>
         </section>
       {{/each}}
@@ -264,32 +267,53 @@
 
       <!-- Conclusion. -->
       {{#if (hasItems paper.content.conclusion.paragraphs)}}
-        <section class="section">
-          <div class="container is-max-desktop">
-            <div class="columns is-centered has-text-centered">
-              <div class="column is-four-fifths">
-                <h2 class="title is-3">{{paper.content.conclusion.title}}</h2>
-              </div>
-            </div>
-            <div class="columns is-centered has-text-centered">
-              <div class="column is-four-fifths">
-                <div class="content has-text-justified">
-                  {{#each paper.content.conclusion.paragraphs}}
+        <section class="section" id="conclusion">
+          <div class="container is-max-widescreen">
+            <h2 class="title is-3 has-text-centered section-title reveal">{{paper.content.conclusion.title}}</h2>
+            <div class="columns is-variable is-5">
+              {{#each paper.content.conclusion.paragraphs}}
+                <div class="column reveal">
+                  <div class="info-card contribution-card">
+                    <span class="card-index">0{{inc @index}}</span>
                     <p>{{text}}</p>
-                  {{/each}}
+                  </div>
                 </div>
-              </div>
+              {{/each}}
             </div>
           </div>
         </section>
       {{/if}}
       <!--/ Conclusion. -->
 
+      <!-- Authors. -->
+      <section class="section is-shaded" id="authors">
+        <div class="container is-max-widescreen">
+          <h2 class="title is-3 has-text-centered section-title reveal">Authors</h2>
+          <div class="author-grid reveal">
+            {{#each paper.authors}}
+              <div class="author-chip">
+                <span class="author-name">{{#if links.website}}<a href="{{links.website}}" target="_blank" rel="noopener">{{name}}</a>{{else}}{{name}}{{/if}}</span><sup>{{affiliation.number}}{{#if equal_contribution}}*{{/if}}{{#if corresponding}}†{{/if}}</sup>
+              </div>
+            {{/each}}
+          </div>
+          <p class="author-notes reveal"><sup>*</sup> Equal contribution &nbsp;&nbsp; <sup>†</sup> Corresponding authors</p>
+          <ol class="affiliation-list reveal">
+            {{#each paper.affiliations}}
+              <li><sup>{{number}}</sup>{{name}}</li>
+            {{/each}}
+          </ol>
+        </div>
+      </section>
+      <!--/ Authors. -->
+
       <!-- BibTeX. -->
-      <section class="section" id="BibTeX">
-        <div class="container is-max-desktop content">
-          <h2 class="title">BibTeX</h2>
-          <pre><code>{{paper.bibtex}}</code></pre>
+      <section class="section" id="citation">
+        <div class="container is-max-widescreen">
+          <h2 class="title is-3 has-text-centered section-title reveal">BibTeX</h2>
+          <div class="bibtex-box reveal">
+            <button class="copy-button" type="button" id="copy-bibtex">Copy</button>
+            <pre><code id="bibtex-code">{{paper.bibtex}}</code></pre>
+          </div>
         </div>
       </section>
       <!--/ BibTeX. -->

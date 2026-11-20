@@ -40,6 +40,21 @@ const paper = {
     url: "https://cryodino.github.io/",
     description:
       "CryoDINO: A generalizable 3D foundation model for cryo-electron tomography",
+    short_title: "CryoDINO",
+    subtitle:
+      "A generalizable 3D foundation model for cryo-electron tomography",
+    hero_video: {
+      src: "./static/videos/tiled_2x2.mp4",
+      caption:
+        "CryoDINO learns generalizable 3D representations that transfer across the full spectrum of cryo-ET object identification challenges. Each panel shows a different downstream dataset from — thin actin filaments to densely packed organelle classes — all segmented by the same pretrained backbone with minimal annotations.",
+    },
+    stats: [
+      { value: "1,658", label: "Tomograms" },
+      { value: "425,852", label: "3D patches" },
+      { value: "37", label: "Species" },
+    ],
+    tagline:
+      "A 3D foundation model for cryo-electron tomography, pretrained on 425,852 3D patches from 1,658 tomograms spanning 37 species, for semantic segmentation and particle detection.",
   },
   // navbar: {
   //   home_link: "https://example.com",
@@ -50,6 +65,16 @@ const paper = {
   //     },
   //   ],
   // },
+  nav: [
+    { id: "abstract", label: "Abstract" },
+    { id: "overview", label: "Overview" },
+    { id: "preprocessing", label: "Data" },
+    { id: "representations", label: "Representations" },
+    { id: "segmentation", label: "Segmentation" },
+    { id: "detection", label: "Detection" },
+    { id: "authors", label: "Authors" },
+    { id: "citation", label: "BibTeX" },
+  ],
   authors: [
     {
       name: "Ahmadreza Attarpour",
@@ -74,7 +99,7 @@ const paper = {
     { name: "Jun Ma", affiliation: { number: "2" } },
     {
       name: "Bo Wang",
-      affiliation: { number: "1,2,3,4" },
+      affiliation: { number: "1,2,3,4,10" },
       corresponding: true,
     },
   ],
@@ -109,6 +134,10 @@ const paper = {
       number: "9",
       name: "Centre for Neuromodulation, Sunnybrook Health Sciences Centre, Toronto, Canada",
     },
+    {
+      number: "10",
+      name: "Princess Margaret Cancer Center, University Health Network, Toronto, Ontario, Canada",
+    },
   ],
   link_items: [
     // {
@@ -130,18 +159,6 @@ const paper = {
   content: {
     intros: [
       {
-        title:
-          "CryoDINO in Action: Object Identification Across Biological Structures",
-        video: {
-          src: "./static/videos/tiled_2x2.mp4",
-        },
-        paragraphs: [
-          {
-            text: "CryoDINO learns generalizable 3D representations that transfer across the full spectrum of cryo-ET object identification challenges. Each panel shows a different downstream dataset from — thin actin filaments to densely packed organelle classes — all segmented by the same pretrained backbone with minimal annotations.",
-          },
-        ],
-      },
-      {
         title: "Abstract",
         paragraphs: [
           {
@@ -152,20 +169,92 @@ const paper = {
     ],
     sections: [
       {
+        id: "overview",
         title: "Overview of CryoDINO",
+        shaded: true,
         image: {
-          src: "./static/images/fig1_overview.jpg",
+          src: "./static/images/fig1a_pipeline.png",
           caption:
-            "Overview of CryoDINO. (a) A 3D ViT-Large was pretrained with 3DINO on 1,658 tomograms from 48 datasets and transferred to segmentation and particle detection using task-specific decoders. (b) Distribution of 3D training patches across species, colored by biological domain. (c) Downstream performance with 10%, 50%, and 100% of the training data. CryoDINO uses a frozen pretrained encoder and outperforms the baselines, with the largest gains in the 10% label regime. (d) Patch-level representations and multi-head self-attention across tomographic planes: raw tomograms, ground truth, PCA feature maps, and final-layer class-token attention.",
+            "A 3D ViT-Large was pretrained with 3DINO on 1,658 tomograms from 48 datasets and transferred to segmentation and particle detection using task-specific decoders.",
         },
         paragraphs: [
           {
             text: "Here, we present CryoDINO, a cryo-ET 3D foundation model pretrained on 425,852 patches extracted from 1,658 unique tomograms in the CryoET Data Portal. Our approach builds on 3DINO, a three-dimensional extension of DINOv2 that adapts self-supervised teacher–student distillation to volumetric data. We show that CryoDINO learns transferable, semantically rich representations that capture macromolecular identity and broader cellular context. A shared pretrained backbone, coupled with optimized task-specific decoders, enables both semantic segmentation and particle detection.",
           },
         ],
+        columns: [
+          {
+            title: "Pretraining Methods",
+            card: true,
+            paragraphs: [
+              {
+                text: "Our implementation builds on 3DINO, a volumetric extension of DINOv2, using the official DINOv2 PyTorch codebase. Pretraining was performed on four NVIDIA B200-183GB GPUs with a ViT-Large backbone and a patch size of 16 × 16 × 16. Standard pretraining used a batch size of 275 per GPU (1,100 total), global crops of 96³, and eight local crops of 48³. A subsequent high-resolution adaptation stage followed the 3DINO protocol with identical scheduling compressed to 12,500 iterations.",
+              },
+            ],
+          },
+          {
+            title: "Finetuning Methods",
+            card: true,
+            paragraphs: [
+              {
+                text: "Using the selected backbone, we evaluated ViTAdapterUNETR, under two regimes: (i) frozen backbone (only the adapter and decoder are trained) and (ii) full fine-tuning (joint encoder–decoder optimization). For particle picking, CryoDINO was paired with the ViTAdapterUNETR decoder with feature pyramid network (FPN) fusion. The four multi-scale feature maps from the adapter were fused top-down through three UNETR up-sampling blocks, stopping at the penultimate level, half the input resolution.",
+              },
+            ],
+          },
+        ],
       },
       {
+        id: "preprocessing",
+        title: "Pretraining data preprocessing",
+        image: {
+          src: "./static/images/fig_preprocessing.jpg",
+        },
+        paragraphs: [
+          {
+            text: "We curated a large, unlabeled pretraining corpus using data from the CryoET Data Portal, selecting tomograms with high-quality tilt series (score ≥ 4/5) and excluding runs with low axial resolution (>20 Å along the z-axis). To prevent data leakage, acquisitions overlapping with downstream annotated datasets and duplicate runs were removed. To avoid overrepresentation of large studies, each dataset contributed at most 100 training tomograms via random sampling. The resulting corpus spans diverse organisms, cellular contexts, and imaging conditions while limiting dominance by individual large studies. For patch extraction, an approximate foreground mask was generated per tomogram using deconvolution followed by Otsu thresholding. Mask-guided sampling retained only subvolumes containing more than 4,096 foreground voxels, matching the 16 × 16 × 16 ViT tokenization to ensure at least one fully informative structural token per patch. In total, 425,852 biologically meaningful 3D patches were extracted for self-supervised pretraining.",
+          },
+        ],
+      },
+      {
+        shaded: true,
+        columns: [
+          {
+            width: "is-7",
+            image: {
+              src: "./static/images/fig1b_dataset.png",
+              caption:
+                "Distribution of 3D training patches across species, colored by biological domain.",
+            },
+          },
+          {
+            width: "is-5",
+            image: {
+              src: "./static/images/fig1c_performance.png",
+              caption:
+                "Downstream performance with 10%, 50%, and 100% of the training data. CryoDINO uses a frozen pretrained encoder and outperforms the baselines, with the largest gains in the 10% label regime.",
+            },
+          },
+        ],
+      },
+      {
+        id: "representations",
+        title: "Patch-level representation and multi-head self-attention",
+        image: {
+          src: "./static/images/fig1d_representations.jpg",
+          caption:
+            "Patch-level representations and multi-head self-attention across tomographic planes: raw tomograms, ground truth, PCA feature maps, and final-layer class-token attention.",
+        },
+        paragraphs: [
+          {
+            text: "To inspect the learned embeddings we visualized patch-level principal components (PCA) and multi-head self-attention (MHSA) maps of the frozen backbone. The PCA projections separated the foreground cellular context from the background on unseen downstream data and grouped structurally similar regions; for DS-10001, components inside the foreground (cytoplasm, organelles, membrane) were distinct from the background. MHSA maps concentrated on structured regions despite acquisition noise and reconstruction artifacts.",
+          },
+        ],
+      },
+      {
+        id: "segmentation",
         title: "CryoDINO enables generalizable and label-efficient semantic segmentation",
+        shaded: true,
+        layout: "split",
         image: {
           src: "./static/images/fig2_segmentation_qualitative.jpg",
           caption:
@@ -178,6 +267,7 @@ const paper = {
         ],
       },
       {
+        id: "detection",
         title: "CryoDINO transfers effectively to particle detection",
         image: {
           src: "./static/images/fig3_detection_qualitative.jpg",
