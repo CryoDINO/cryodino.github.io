@@ -1,6 +1,16 @@
 Handlebars.registerHelper("eq", function (a, b) {
   return a === b;
 });
+// Table cell: a string starting with "**" is rendered bold (best value in column).
+Handlebars.registerHelper("cell", function (value) {
+  const str = String(value == null ? "" : value);
+  if (str.startsWith("**")) {
+    return new Handlebars.SafeString(
+      "<strong>" + Handlebars.escapeExpression(str.slice(2)) + "</strong>"
+    );
+  }
+  return str;
+});
 Handlebars.registerHelper("hasItems", function (arr) {
   return arr && arr.length > 0;
 });

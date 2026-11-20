@@ -101,14 +101,12 @@
                         <a href="{{links.website}}" target="_blank">{{name}}</a>
                       {{else}}
                         {{name}}
-                      {{/if}}{{#if equal_contribution}}<sup
-                        >†&nbsp;</sup>{{/if}}<sup
-                      >{{affiliation.number}}</sup>{{#unless @last}},{{/unless}}
+                      {{/if}}<sup>{{affiliation.number}}{{#if equal_contribution}},*{{/if}}{{#if corresponding}},†{{/if}}</sup>{{#unless @last}},{{/unless}}
                     </span>
                   {{/each}}
                 </div>
 
-                <div class="is-size-6 publication-authors"><sup>†</sup>&nbsp;Equal contribution</div>
+                <div class="is-size-6 publication-authors"><sup>*</sup>&nbsp;Equal contribution&nbsp;&nbsp;<sup>†</sup>&nbsp;Corresponding authors</div>
 
                 <br />
 
@@ -192,7 +190,7 @@
                 <h2 class="title is-3">{{title}}</h2>
                 {{#if image}}
                   <div class="content-block-media">
-                    <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" />
+                    <img src="{{image.src}}" alt="{{#if image.caption}}{{image.caption}}{{else}}{{title}}{{/if}}" loading="lazy" />
                     {{#if image.caption}}
                       <p class="content-block-caption">{{image.caption}}</p>
                     {{/if}}
@@ -205,13 +203,60 @@
               <div class="columns is-centered has-text-centered">
                 <div class="column is-four-fifths">
                   <div class="content has-text-justified">
-                    {{#each paragraphs}}
-                      <p>{{text}}</p>
-                    {{/each}}
+                    {{#if (eq paragraphStyle "list")}}
+                      <ul>
+                        {{#each paragraphs}}
+                          <li>{{text}}</li>
+                        {{/each}}
+                      </ul>
+                    {{else}}
+                      {{#each paragraphs}}
+                        <p>{{text}}</p>
+                      {{/each}}
+                    {{/if}}
                   </div>
                 </div>
               </div>
             {{/if}}
+
+            {{#if table}}
+              <div class="columns is-centered">
+                <div class="column is-four-fifths">
+                  <div class="table-container results-table">
+                    <table class="table is-narrow is-hoverable is-fullwidth">
+                      <thead>
+                        <tr>
+                          {{#each table.columns}}<th>{{this}}</th>{{/each}}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{#each table.rows}}
+                          <tr>
+                            {{#each this}}<td>{{cell this}}</td>{{/each}}
+                          </tr>
+                        {{/each}}
+                      </tbody>
+                    </table>
+                  </div>
+                  {{#if table.caption}}
+                    <p class="content-block-caption">{{table.caption}}</p>
+                  {{/if}}
+                </div>
+              </div>
+            {{/if}}
+
+            {{#each extra_images}}
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <div class="content-block-media">
+                    <img src="{{src}}" alt="{{#if caption}}{{caption}}{{else}}{{../title}}{{/if}}" loading="lazy" />
+                    {{#if caption}}
+                      <p class="content-block-caption">{{caption}}</p>
+                    {{/if}}
+                  </div>
+                </div>
+              </div>
+            {{/each}}
           </div>
         </section>
       {{/each}}
