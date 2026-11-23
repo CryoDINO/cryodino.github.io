@@ -956,8 +956,27 @@ h3 {
   -webkit-text-fill-color: var(--ink);
 }
 
+.hero-title {
+  justify-content: center;
+}
+
+.hero-text {
+  text-align: center;
+}
+
+.hero-text .hero-tagline {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-text .hero-stats,
+.hero-text .hero-links {
+  justify-content: center;
+}
+
 .hero-logo {
-  height: 1em;
+  height: clamp(14rem, 30vw, 22rem);
+  mix-blend-mode: multiply;
   border: none;
   box-shadow: none;
   padding: 0;
