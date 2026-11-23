@@ -101,7 +101,7 @@ const paper = {
     { name: "Jun Ma", affiliation: { number: "2,8" } },
     {
       name: "Bo Wang",
-      affiliation: { number: "1,2,3,4,8" },
+      affiliation: { number: "3,4,11" },
       corresponding: true,
     },
   ],
@@ -110,7 +110,10 @@ const paper = {
       number: "1",
       name: "Peter Munk Cardiac Centre, University Health Network, Toronto, Canada",
     },
-    { number: "2", name: "University Health Network, Toronto, Canada" },
+    {
+      number: "2",
+      name: "Toronto General Hospital Research Institute, University Health Network, Toronto, Canada",
+    },
     {
       number: "3",
       name: "Department of Computer Science, University of Toronto, Toronto, Canada",
@@ -139,6 +142,10 @@ const paper = {
     {
       number: "10",
       name: "Centre for Neuromodulation, Sunnybrook Health Sciences Centre, Toronto, Canada",
+    },
+    {
+      number: "11",
+      name: "Department of Laboratory Medicine and Pathobiology, University of Toronto, Toronto, Canada",
     },
   ],
   link_items: [
