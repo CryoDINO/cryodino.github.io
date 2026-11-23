@@ -1129,3 +1129,31 @@ h3 {
   font-size: clamp(1.3rem, 2vw, 1.6rem) !important;
   max-width: 760px;
 }
+
+/* Uniform text color */
+:root {
+  --ink: #111111;
+  --ink-soft: #111111;
+  --muted: #111111;
+}
+
+.hero-subtitle,
+.content-block-caption,
+.stat-label,
+.author-notes,
+.affiliation-list,
+.footer,
+.footer .content p,
+.topbar-links a {
+  color: var(--ink) !important;
+}
+
+.hero-modern {
+  padding: 3.5rem 1.5rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .hero-modern {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+}

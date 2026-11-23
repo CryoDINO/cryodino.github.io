@@ -45,16 +45,16 @@ const paper = {
       "A generalizable 3D foundation model for cryo-electron tomography",
     hero_video: {
       src: "./static/videos/tiled_2x2.mp4",
-      caption:
-        "CryoDINO learns generalizable 3D representations that transfer across the full spectrum of cryo-ET object identification challenges. Each panel shows a different downstream dataset from — thin actin filaments to densely packed organelle classes — all segmented by the same pretrained backbone with minimal annotations.",
+      // caption:
+      //   "CryoDINO learns generalizable 3D representations that transfer across the full spectrum of cryo-ET object identification challenges. Each panel shows a different downstream dataset from — thin actin filaments to densely packed organelle classes — all segmented by the same pretrained backbone with minimal annotations.",
     },
     stats: [
       { value: "1,658", label: "Tomograms" },
       { value: "425,852", label: "3D patches" },
       { value: "37", label: "Species" },
     ],
-    tagline:
-      "A 3D foundation model for cryo-electron tomography, pretrained on 425,852 3D patches from 1,658 tomograms spanning 37 species, for semantic segmentation and particle detection.",
+    // tagline:
+    //   "A 3D foundation model for cryo-electron tomography, pretrained on 425,852 3D patches from 1,658 tomograms spanning 37 species, for semantic segmentation and particle detection.",
   },
   // navbar: {
   //   home_link: "https://example.com",
@@ -94,12 +94,14 @@ const paper = {
     { name: "Ching-Yuan Yu", affiliation: { number: "1,2" } },
     { name: "Yeonwoo Seo", affiliation: { number: "7" } },
     { name: "Baidu Li", affiliation: { number: "2" } },
-    { name: "Maged Goubran", affiliation: { number: "5,6,8,9" } },
+    { name: "Elnaz Khalili Samani", affiliation: { number: "8" } },
+    { name: "Mohammad T. Mazhab-Jafari", affiliation: { number: "8" } },
+    { name: "Maged Goubran", affiliation: { number: "5,6,9,10" } },
     { name: "Barry B. Rubin", affiliation: { number: "1,2" } },
-    { name: "Jun Ma", affiliation: { number: "2" } },
+    { name: "Jun Ma", affiliation: { number: "2,8" } },
     {
       name: "Bo Wang",
-      affiliation: { number: "1,2,3,4,10" },
+      affiliation: { number: "1,2,3,4,8" },
       corresponding: true,
     },
   ],
@@ -128,15 +130,15 @@ const paper = {
     },
     {
       number: "8",
-      name: "Hurvitz Brain Sciences, Sunnybrook Health Sciences Centre, Toronto, Canada",
+      name: "Princess Margaret Cancer Center, University Health Network, Toronto, Ontario, Canada",
     },
     {
       number: "9",
-      name: "Centre for Neuromodulation, Sunnybrook Health Sciences Centre, Toronto, Canada",
+      name: "Hurvitz Brain Sciences, Sunnybrook Health Sciences Centre, Toronto, Canada",
     },
     {
       number: "10",
-      name: "Princess Margaret Cancer Center, University Health Network, Toronto, Ontario, Canada",
+      name: "Centre for Neuromodulation, Sunnybrook Health Sciences Centre, Toronto, Canada",
     },
   ],
   link_items: [
